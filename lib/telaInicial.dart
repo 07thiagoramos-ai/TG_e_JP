@@ -10,6 +10,33 @@ class TelaInicial extends StatefulWidget {
 class _TelaInicialState extends State<TelaInicial> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
+        title: Text("Tela inicial", style: TextStyle(color: Colors.white), )
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {}, 
+                    child: Text("1")
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {}, 
+                    child: Text("2")
+                  ),                ],
+              )
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
