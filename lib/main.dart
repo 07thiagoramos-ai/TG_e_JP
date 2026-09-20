@@ -1,7 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tg_e_jp/telaInicial.dart';
+import 'package:tg_e_jp/firebase_options.dart';
+import 'package:tg_e_jp/login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const App());
 }
 
@@ -14,7 +20,7 @@ class App extends StatelessWidget {
       title: "Eventos",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.green),
-      home: TelaInicial(),
+      home: Login(),
     );
   }
 }
