@@ -19,16 +19,10 @@ class DefaultFirebaseOptions {
         return linux;
 
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
 
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
 
       default:
         throw UnsupportedError(
@@ -38,25 +32,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: "AIzaSyDfFrLWotEnDQ70XYVAe8avhnb2YKg2Zxg",
-    authDomain: "tgejp-83855.firebaseapp.com",
-    projectId: "tgejp-83855",
-    storageBucket: "tgejp-83855.firebasestorage.app",
-    messagingSenderId: "653466456389",
-    appId: "1:653466456389:web:3c7f3b0c397b791b9f6e2c",
-    measurementId: "G-FZBNXV8BLK"
+    apiKey: 'AIzaSyDfFrLWotEnDQ70XYVAe8avhnb2YKg2Zxg',
+    appId: '1:653466456389:web:3c7f3b0c397b791b9f6e2c',
+    messagingSenderId: '653466456389',
+    projectId: 'tgejp-83855',
+    authDomain: 'tgejp-83855.firebaseapp.com',
+    storageBucket: 'tgejp-83855.firebasestorage.app',
+    measurementId: 'G-FZBNXV8BLK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: "AIzaSyDfFrLWotEnDQ70XYVAe8avhnb2YKg2Zxg",
-    authDomain: "tgejp-83855.firebaseapp.com",
-    projectId: "tgejp-83855",
-    storageBucket: "tgejp-83855.firebasestorage.app",
-    messagingSenderId: "653466456389",
-    appId: "1:653466456389:web:3c7f3b0c397b791b9f6e2c",
-    measurementId: "G-FZBNXV8BLK"
+    apiKey: 'AIzaSyBUs8nv5bQz0_4maGDA_xhDTJpzBVUSygg',
+    appId: '1:653466456389:android:38fe534a70d928289f6e2c',
+    messagingSenderId: '653466456389',
+    projectId: 'tgejp-83855',
+    storageBucket: 'tgejp-83855.firebasestorage.app',
   );
-
   static const FirebaseOptions linux = FirebaseOptions(
     apiKey: "AIzaSyDfFrLWotEnDQ70XYVAe8avhnb2YKg2Zxg",
     authDomain: "tgejp-83855.firebaseapp.com",
@@ -68,12 +59,29 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: "AIzaSyDfFrLWotEnDQ70XYVAe8avhnb2YKg2Zxg",
-    authDomain: "tgejp-83855.firebaseapp.com",
-    projectId: "tgejp-83855",
-    storageBucket: "tgejp-83855.firebasestorage.app",
-    messagingSenderId: "653466456389",
-    appId: "1:653466456389:web:3c7f3b0c397b791b9f6e2c",
-    measurementId: "G-FZBNXV8BLK"
+    apiKey: 'AIzaSyDfFrLWotEnDQ70XYVAe8avhnb2YKg2Zxg',
+    appId: '1:653466456389:web:f6ab65dce64ba0859f6e2c',
+    messagingSenderId: '653466456389',
+    projectId: 'tgejp-83855',
+    authDomain: 'tgejp-83855.firebaseapp.com',
+    storageBucket: 'tgejp-83855.firebasestorage.app',
+    measurementId: 'G-CE4HWQ2XP9',
+  );
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyB8GK_XWrpn_-vM_tqHjOJnIlxPmA4Q6cA',
+    appId: '1:653466456389:ios:d520e5182f38b9ab9f6e2c',
+    messagingSenderId: '653466456389',
+    projectId: 'tgejp-83855',
+    storageBucket: 'tgejp-83855.firebasestorage.app',
+    iosBundleId: 'com.example.tgEJp',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyB8GK_XWrpn_-vM_tqHjOJnIlxPmA4Q6cA',
+    appId: '1:653466456389:ios:d520e5182f38b9ab9f6e2c',
+    messagingSenderId: '653466456389',
+    projectId: 'tgejp-83855',
+    storageBucket: 'tgejp-83855.firebasestorage.app',
+    iosBundleId: 'com.example.tgEJp',
   );
 }

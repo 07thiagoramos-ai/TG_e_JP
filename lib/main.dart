@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tg_e_jp/firebase_options.dart';
-import 'package:tg_e_jp/login.dart';
+import 'package:tg_e_jp/loginForm.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       title: "Eventos",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.green),
-      home: Login(),
+      home: LoginForm(),
     );
   }
 }

@@ -39,14 +39,22 @@ class _CadastroFormState extends State<CadastroForm> {
 
     final usuario = FirebaseAuth.instance.currentUser!;
 
-    await FirebaseFirestore.instance
-        .collection('participantes')
-        .doc(usuario.uid)
-        .set({
-      'nome': nome,
-      'matricula': int.parse(matricula!),
-    });
-
+    try {
+      await FirebaseFirestore.instance
+          .collection('participantes')
+          .doc(usuario.uid)
+          .set({
+        'nome': nome,
+        'matricula': int.parse(matricula!),
+      });
+    } on FirebaseException catch (erro) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao salvar: ${erro.code}')),
+      );
+      return;
+    }
+    
     if (!mounted) return;
 
     Navigator.pushReplacement(
@@ -67,24 +75,43 @@ class _CadastroFormState extends State<CadastroForm> {
             child: Column(
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     labelText: "Nome",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
                   ),
-                  validator: (valor) =>
-                      valor!.isEmpty ? "Campo vazio" : null,
-                  onSaved: (valor) => nome = valor,
+                  validator: (valor) {
+                    if (valor!.isEmpty) {
+                      return "Campo vazio";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (valor) {
+                    nome = valor;
+                  }
                 ),
+
                 const SizedBox(height: 20),
+
                 TextFormField(
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                     labelText: "Matrícula",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
                   ),
                   validator: (valor) {
-                    if (valor!.isEmpty) return "Campo vazio";
-                    if (int.tryParse(valor) == null) return "Só números";
+                    if (valor!.isEmpty) {
+                      return "Campo vazio";
+                    }
+
+                    if (int.tryParse(valor) == null) {
+                      return "Apenas números";
+                    }
                     return null;
                   },
                   onSaved: (valor) => matricula = valor,
@@ -94,25 +121,44 @@ class _CadastroFormState extends State<CadastroForm> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: "Email",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
                   ),
-                  validator: (valor) =>
-                      valor!.isEmpty ? "Campo vazio" : null,
-                  onSaved: (valor) => email = valor,
+                  validator: (valor) {
+                    if (valor!.isEmpty) {
+                      return "Campo vazio";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (valor) {
+                    email = valor;
+                  },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   obscureText: true,
                   decoration: const InputDecoration(
                     labelText: "Senha",
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
                   ),
                   validator: (valor) {
-                    if (valor!.isEmpty) return "Campo vazio";
-                    if (valor.length < 6) return "Mínimo de 6 caracteres";
+                    if (valor!.isEmpty) {
+                      return "Campo vazio";
+                    }
+
+                    if (valor.length < 6) {
+                      return "Mínimo de 6 caracteres";
+                    }
+
                     return null;
                   },
-                  onSaved: (valor) => senha = valor,
+                  onSaved: (valor) {
+                    senha = valor;
+                  },
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

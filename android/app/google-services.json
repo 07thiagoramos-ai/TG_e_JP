@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "653466456389",
+    "project_id": "tgejp-83855",
+    "storage_bucket": "tgejp-83855.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653466456389:android:38fe534a70d928289f6e2c",
+        "android_client_info": {
+          "package_name": "com.example.tg_e_jp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUs8nv5bQz0_4maGDA_xhDTJpzBVUSygg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
