@@ -28,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
     final resultado = await Authentication().signIn(
       email: email!,
       senha: senha!,
-    );
+    );              
 
     if (!mounted) return;
 

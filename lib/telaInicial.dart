@@ -15,9 +15,16 @@ class _TelaInicialState extends State<TelaInicial> {
       appBar: appBarGeral(context, "Tela inicial"),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: Row(
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              margin: EdgeInsets.all(40),
+              padding: EdgeInsets.all(80),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
