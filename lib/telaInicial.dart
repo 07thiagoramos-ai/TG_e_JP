@@ -25,7 +25,7 @@ class _TelaInicialState extends State<TelaInicial> {
                 children: [
                   ElevatedButton(
                     onPressed: () {}, 
-                    child: Text("3S")
+                    child: Text("1")
                   ),
 
                   ElevatedButton(
