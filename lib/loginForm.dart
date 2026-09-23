@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tg_e_jp/authentication.dart';
 import 'package:tg_e_jp/cadastroForm.dart';
+import 'package:tg_e_jp/funcao/widget.dart';
 import 'package:tg_e_jp/telaInicial.dart';
 
 class LoginForm extends StatefulWidget {
@@ -49,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Entrar")),
+      appBar: appBarGeral(context, "Login"),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),

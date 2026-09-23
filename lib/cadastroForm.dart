@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tg_e_jp/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tg_e_jp/funcao/widget.dart';
 import 'package:tg_e_jp/telaInicial.dart';
 
 class CadastroForm extends StatefulWidget {
@@ -66,7 +67,7 @@ class _CadastroFormState extends State<CadastroForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Criar conta")),
+      appBar: appBarGeral(context, "Cadastro"),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
