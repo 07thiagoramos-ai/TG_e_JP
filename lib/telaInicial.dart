@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tg_e_jp/funcao/widget.dart';
 
 class TelaInicial extends StatefulWidget {
   const new({super.key});
@@ -12,7 +11,11 @@ class _TelaInicialState extends State<TelaInicial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarGeral(context, "Tela inicial"),
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
+        title: Text("Tela inicial", style: TextStyle(color: Colors.white), )
+      ),
       body: Center(
         child: Column(
           children: [

@@ -52,73 +52,103 @@ class _LoginFormState extends State<LoginForm> {
     return Scaffold(
       appBar: appBarGeral(context, "Login"),
       body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+      child: SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+        child: Container(width: 450, height: 400,
+          padding: const EdgeInsets.all(25),
+          decoration: BoxDecoration(
+          border: Border.all(color: const Color.fromARGB(255, 0, 0, 0)),
+          borderRadius: BorderRadius.circular(15),
+           ),
           child: Form(
-            key: _chaveFormulario,
-            child: Column(
-              children: [
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: "Email",
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (valor) {
-                    if (valor!.isEmpty) {
-                      return "Campo vazio";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (valor) {
-                    email = valor;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: "Senha",
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (valor) {
-                    if (valor!.isEmpty) {
-                      return "Campo vazio";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (valor) {
-                    senha = valor;
-                  },
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  height: 54,
-                  width: 184,
-                  child: ElevatedButton(
-                    onPressed: _carregando ? null : _entrar,
-                    child: _carregando
-                        ? const CircularProgressIndicator()
-                        : const Text("Entrar"),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CadastroForm(),
+                key: _chaveFormulario,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                      Text(
+                          "Acessar conta",
+                           style: TextStyle(
+                           fontSize: 24,
+                           fontWeight: FontWeight.bold,
+                           ),
+                        ),
+                    SizedBox(height: 5),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: "Email",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                         ),
+                       ),
+                      validator: (valor) {
+                        if (valor!.isEmpty) {
+                          return "Campo vazio";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (valor) {
+                        email = valor;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: "Senha",
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                    );
-                  },
-                  child: const Text("Criar conta"),
+                      ),
+                      validator: (valor) {
+                        if (valor!.isEmpty) {
+                          return "Campo vazio";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (valor) {
+                        senha = valor;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                    height: 54,
+                    width: 184,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: _carregando ? null : _entrar,
+                      child: _carregando
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              "Entrar",
+                              style: TextStyle(
+                                fontSize: 18
+                                ,
+                              ),
+                            ),
+                    ),
+                  ),
+                    const SizedBox(height: 12),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CadastroForm(),
+                          ),
+                        );
+                      },
+                      child: const Text("Criar conta"),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+          )
         ),
       ),
     );
