@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tg_e_jp/authentication.dart';
 import 'package:tg_e_jp/cadastroForm.dart';
+import 'package:tg_e_jp/eventos/telaEventos.dart';
 import 'package:tg_e_jp/funcao/widget.dart';
-import 'package:tg_e_jp/telaInicial.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -41,9 +41,11 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
+    print('adm = ${Authentication().adm} | uid = ${Authentication().User?.uid}');
+    
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const TelaInicial()),
+      MaterialPageRoute(builder: (context) => TelaEventos()),
     );
   }
 

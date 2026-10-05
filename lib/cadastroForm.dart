@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tg_e_jp/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tg_e_jp/eventos/telaEventos.dart';
 import 'package:tg_e_jp/funcao/widget.dart';
-import 'package:tg_e_jp/telaInicial.dart';
 
 class CadastroForm extends StatefulWidget {
   const CadastroForm({super.key});
@@ -60,7 +60,7 @@ class _CadastroFormState extends State<CadastroForm> {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const TelaInicial()),
+      MaterialPageRoute(builder: (context) => TelaEventos()),
     );
   }
 

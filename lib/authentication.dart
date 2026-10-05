@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Authentication {
+  static final Authentication _instancia = Authentication._interno();
+  factory Authentication() => _instancia;
+  Authentication._interno();
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool adm = false;
 
@@ -43,22 +47,17 @@ class Authentication {
   Future<bool> VerificarNivelUsuario() async {
     final uid = _auth.currentUser?.uid;
     
-    if (uid != null) {
+    if (uid == null) {
+    adm = false;
+    return adm;
+    } 
       try {
         final documento = await FirebaseFirestore.instance
-            .collection('admins')
-            .doc(uid)
-            .get();
-
-        if (documento.exists) {
-          adm = true; 
-        } else {
-          adm = false;
-        }
-      } on FirebaseException {
-        adm = false;
-      }
-    } else {
+          .collection('participantes')
+          .doc(uid)
+          .get();
+      adm = documento.data()?['adm'] == true;
+    } on FirebaseException {
       adm = false;
     }
     return adm;
