@@ -22,7 +22,6 @@ class _TelaComentariosState extends State<TelaComentarios> {
   final _controladorComentario = TextEditingController();
   bool _enviando = false;
 
-  // eventos/{id}/comentarios
   CollectionReference<Map<String, dynamic>> 
   get _colecaoComentarios =>
       FirebaseFirestore.instance
@@ -84,16 +83,16 @@ class _TelaComentariosState extends State<TelaComentarios> {
                   return Center(child: Text('Erro: ${snapshot.error}'));
                 }
                 if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 }
 
                 final comentarios = snapshot.data!.docs;
                 if (comentarios.isEmpty) {
-                  return const Center(child: Text("Nenhum comentário ainda."));
+                  return Center(child: Text("Nenhum comentário ainda."));
                 }
 
                 return ListView.builder(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12),
                   itemCount: comentarios.length,
                   itemBuilder: (context, indice) {
                     final comentario = comentarios[indice];
@@ -107,8 +106,10 @@ class _TelaComentariosState extends State<TelaComentarios> {
                         subtitle: Text(dados['texto'] ?? ''),
                         trailing: podeApagar
                             ? IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () => comentario.reference.delete(),
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  comentario.reference.delete();
+                                },
                               )
                             : null,
                       ),
@@ -122,15 +123,17 @@ class _TelaComentariosState extends State<TelaComentarios> {
           // campo para escrever o comentário
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+              padding: EdgeInsets.all(12),
               child: Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: _controladorComentario,
                       textInputAction: TextInputAction.send,
-                      onSubmitted: (_) => _enviar(),
-                      decoration: const InputDecoration(
+                      onSubmitted: (_) {
+                        _enviar();
+                      },
+                      decoration: InputDecoration(
                         hintText: "Escreva um comentário",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -138,10 +141,12 @@ class _TelaComentariosState extends State<TelaComentarios> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+
+                  SizedBox(width: 8),
+
                   IconButton.filled(
                     onPressed: _enviando ? null : _enviar,
-                    icon: const Icon(Icons.send),
+                    icon: Icon(Icons.send),
                   ),
                 ],
               ),

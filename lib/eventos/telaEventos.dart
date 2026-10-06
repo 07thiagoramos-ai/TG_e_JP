@@ -14,12 +14,11 @@ class TelaEventos extends StatelessWidget {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => const LoginForm()),
-      (rota) => false,
+      MaterialPageRoute(builder: (context) => LoginForm()),
+      (context) => false,
     );
   }
 
-  // admin: abre um pop-up e cria o evento
   Future<void> _criarEvento(BuildContext context) async {
     final controladorTitulo = TextEditingController();
     final controladorDescricao = TextEditingController();
@@ -27,28 +26,32 @@ class TelaEventos extends StatelessWidget {
     final confirmou = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Novo evento"),
+        title: Text("Novo evento"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: controladorTitulo,
-              decoration: const InputDecoration(labelText: "Título"),
+              decoration: InputDecoration(labelText: "Título"),
             ),
             TextField(
               controller: controladorDescricao,
-              decoration: const InputDecoration(labelText: "Descrição"),
+              decoration: InputDecoration(labelText: "Descrição"),
             ),
           ],
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text("Cancelar"),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+            child: Text("Cancelar"),
           ),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text("Criar"),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: Text("Criar"),
           ),
         ],
       ),
@@ -64,7 +67,6 @@ class TelaEventos extends StatelessWidget {
     });
   }
 
-  // admin: pergunta e apaga o evento junto com os comentários dele
   Future<void> _excluirEvento(
     BuildContext context,
     String eventoId,
@@ -73,16 +75,20 @@ class TelaEventos extends StatelessWidget {
     final confirmou = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Excluir evento?"),
+        title: Text("Excluir evento?"),
         content: Text('"$titulo" e todos os comentários dele serão apagados.'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text("Cancelar"),
+            onPressed: () {
+              Navigator.pop(context, false);
+            }, 
+            child: Text("Cancelar"),
           ),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text("Excluir"),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            child: Text("Excluir"),
           ),
         ],
       ),
@@ -90,10 +96,8 @@ class TelaEventos extends StatelessWidget {
 
     if (confirmou != true) return;
 
-    final referenciaEvento =
-        FirebaseFirestore.instance.collection('eventos').doc(eventoId);
+    final referenciaEvento = FirebaseFirestore.instance.collection('eventos').doc(eventoId);
 
-    // o Firestore não apaga subcoleções sozinho, então apagamos os comentários antes
     final comentarios = await referenciaEvento.collection('comentarios').get();
     final lote = FirebaseFirestore.instance.batch();
     for (final comentario in comentarios.docs) {
@@ -103,14 +107,19 @@ class TelaEventos extends StatelessWidget {
     await lote.commit();
   }
 
-  // participante: entra no evento ou sai dele
   Future<void> _alternarInscricao(String eventoId, bool inscrito) async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseFirestore.instance.collection('eventos').doc(eventoId).update({
-      'inscritos': inscrito
-          ? FieldValue.arrayRemove([uid])
-          : FieldValue.arrayUnion([uid]),
-    });
+    final referenciaEvento = FirebaseFirestore.instance.collection('eventos').doc(eventoId);
+
+    if (inscrito) {
+      await referenciaEvento.update({
+        'inscritos': FieldValue.arrayRemove([uid]),
+      });
+    } else {
+      await referenciaEvento.update({
+        'inscritos': FieldValue.arrayUnion([uid]),
+      });
+    }
   }
 
   @override
@@ -119,24 +128,30 @@ class TelaEventos extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Eventos", style: TextStyle(color: Colors.white),),
+        title: Text("Eventos", style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.blueAccent,
         centerTitle: true,
         actions: [
           IconButton(
             icon: Icon(Icons.logout, color: Colors.white,),
             tooltip: "Sair",
-            onPressed: () => _sair(context),
+            onPressed: () {
+              _sair(context);
+            }, 
           ),
         ],
       ),
+
       floatingActionButton: Authentication().adm
           ? FloatingActionButton.extended(
-              icon: const Icon(Icons.add),
-              label: const Text("Novo evento"),
-              onPressed: () => _criarEvento(context),
+              icon: Icon(Icons.add),
+              label: Text("Novo evento"),
+              onPressed: () {
+                _criarEvento(context);
+              },
             )
           : null,
+
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance
             .collection('eventos')
@@ -147,16 +162,16 @@ class TelaEventos extends StatelessWidget {
             return Center(child: Text('Erro: ${snapshot.error}'));
           }
           if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           final eventos = snapshot.data!.docs;
           if (eventos.isEmpty) {
-            return const Center(child: Text("Nenhum evento ainda."));
+            return Center(child: Text("Nenhum evento ainda."));
           }
 
           return ListView.builder(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12),
             itemCount: eventos.length,
             itemBuilder: (context, indice) {
               final evento = eventos[indice];
@@ -175,7 +190,6 @@ class TelaEventos extends StatelessWidget {
                     '${podeComentar ? ' · toque para ver os comentários' : ''}',
                   ),
                   isThreeLine: true,
-                  // só inscritos (e o admin) abrem os comentários
                   onTap: podeComentar
                       ? () {
                           Navigator.push(
@@ -192,25 +206,30 @@ class TelaEventos extends StatelessWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // só o admin vê o botão de apagar o evento
                       if (administrador)
                         IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
+                          icon: Icon(Icons.delete, color: Colors.red),
                           tooltip: "Excluir evento",
-                          onPressed: () => _excluirEvento(
-                            context,
-                            evento.id,
-                            dados['titulo'],
-                          ),
+                          onPressed: () {
+                            _excluirEvento(
+                              context,
+                              evento.id,
+                              dados['titulo'],
+                            );
+                          },
                         ),
                       inscrito
                           ? OutlinedButton(
-                              onPressed: () => _alternarInscricao(evento.id, true),
-                              child: const Text("Sair"),
+                              onPressed: () {
+                                _alternarInscricao(evento.id, true);
+                              },
+                              child: Text("Sair"),
                             )
                           : ElevatedButton(
-                              onPressed: () => _alternarInscricao(evento.id, false),
-                              child: const Text("Inscrever-me"),
+                              onPressed: () {
+                                _alternarInscricao(evento.id, false);
+                              }, 
+                              child: Text("Inscrever-me"),
                             ),
                     ],
                   ),
