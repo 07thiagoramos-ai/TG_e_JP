@@ -22,7 +22,6 @@ class _TelaComentariosState extends State<TelaComentarios> {
   final _controladorComentario = TextEditingController();
   bool _enviando = false;
 
-  // eventos/{id}/comentarios
   CollectionReference<Map<String, dynamic>> 
   get _colecaoComentarios =>
       FirebaseFirestore.instance
@@ -109,7 +108,7 @@ class _TelaComentariosState extends State<TelaComentarios> {
                                 icon: Icon(Icons.delete),
                                 onPressed: () {
                                   comentario.reference.delete();
-                                } 
+                                },
                               )
                             : null,
                       ),
@@ -141,10 +140,12 @@ class _TelaComentariosState extends State<TelaComentarios> {
                       ),
                     ),
                   ),
-                   SizedBox(width: 8),
+
+                  SizedBox(width: 8),
+
                   IconButton.filled(
                     onPressed: _enviando ? null : _enviar,
-                    icon:  Icon(Icons.send),
+                    icon: Icon(Icons.send),
                   ),
                 ],
               ),
